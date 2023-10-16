@@ -44,6 +44,9 @@ class MNISTLoader:
             magic, num_items = struct.unpack('>II', f.read(8))
             labels = np.fromfile(f, dtype=np.uint8)
 
+        images = torch.tensor(images, dtype=torch.float32)
+        labels = torch.tensor(labels, dtype=torch.long)
+
         return images, labels
 
     def get_train_loader(self, batch_size, shuffle=True):

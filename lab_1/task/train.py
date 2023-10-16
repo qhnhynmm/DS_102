@@ -5,6 +5,7 @@ from data.dataset import MNISTLoader
 from model.MLP import MLP_Model
 import torch.optim as optim
 import os
+from evaluate.evaluate import compute_score
 class Classify_Task:
     def __init__(self, config):
         self.num_epochs = config['train']['num_epochs']
@@ -49,7 +50,7 @@ class Classify_Task:
             for images, labels in train:
                 images, labels = images.to(self.device), labels.to(self.device)
                 self.optimizer.zero_grad()
-                logits,loss = self.base_model(images,images)
+                logits,loss = self.base_model(images,labels)
                 loss.backward()
                 self.optimizer.step()
                 train_loss += loss

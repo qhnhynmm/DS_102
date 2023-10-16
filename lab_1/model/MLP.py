@@ -13,6 +13,7 @@ class MLP(nn.Module):
         self.mlp=nn.Linear(self.image_C*self.image_H*self.image_W,self.hidden_dim)
         self.fc=nn.Linear(self.hidden_dim,self.num_classes)
     def forward(self, x):
+        x=x.view(x.shape[0],x.shape[1]*x.shape[2])
         x = self.mlp(x)
         x = self.fc(x)
         x = torch.softmax(x, dim=1)
@@ -31,4 +32,4 @@ class MLP_Model(nn.Module):
         else:
             logits=self.mlp(imgs)
             return logits
-            
+
