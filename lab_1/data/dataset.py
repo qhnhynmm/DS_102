@@ -33,7 +33,7 @@ class MNISTLoader:
         total_test_samples = int(len(self.data_labels))
         self.train_dataset = MNISTDataset(self.data_images[:total_train_samples], self.data_labels[:total_train_samples], transform=self.transform)
         self.dev_dataset = MNISTDataset(self.data_images[total_train_samples:total_dev_samples], self.data_labels[total_train_samples:total_dev_samples], transform=self.transform)
-        self.test_dataset = MNISTDataset(self.data_images[total_dev_samples:total_test_samples], self.devlabels[total_train_samples:total_test_samples], transform=self.transform)
+        self.test_dataset = MNISTDataset(self.data_images[total_dev_samples:total_test_samples], self.data_labels[total_dev_samples:total_test_samples], transform=self.transform)
 
     def load_data(self, images_file, labels_file):
         with open(images_file, 'rb') as f:

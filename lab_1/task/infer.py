@@ -2,7 +2,7 @@
 import os
 import torch
 from model.MLP import MLP_Model
-from data_utils.load_data import Load_data
+from data.dataset import MNISTLoader
 from evaluate.evaluate import compute_score
 class Inference:
     def __init__(self,config):

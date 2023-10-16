@@ -3,6 +3,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from data.dataset import MNISTLoader
 from model.MLP import MLP_Model
+import torch.optim as optim
 import os
 class Classify_Task:
     def __init__(self, config):
@@ -19,7 +20,8 @@ class Classify_Task:
         if not os.path.exists(self.save_path):
           os.makedirs(self.save_path)
 
-        train,valid = self.dataloader.load_train_dev()
+        train = self.dataloader.get_train_loader(batch_size = 32)
+        valid = self.dataloader.get_dev_loader(batch_size = 32)
 
         if os.path.exists(os.path.join(self.save_path, 'last_model.pth')):
             checkpoint = torch.load(os.path.join(self.save_path, 'last_model.pth'))

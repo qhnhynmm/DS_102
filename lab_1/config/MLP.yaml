@@ -1,9 +1,15 @@
 data:
-  train_image_path: D:\ds201\thuc_hanh\lab_1\MNIST\train-images-idx3-ubyte\train-images-idx3-ubyte
-  train_label_path: D:\ds201\thuc_hanh\lab_1\MNIST\train-labels-idx1-ubyte\train-labels-idx1-ubyte
+  train_image_path: /content/DS_102/lab_1/MNIST/train-images.idx3-ubyte
+  train_label_path: /content/DS_102/lab_1/MNIST/train-labels.idx1-ubyte
 train:
   num_epochs: 10
   early_stop_patience: 5
   learning_rate: 0.001
-  
-
+  patience: 5
+  best_metric: f1
+  save_path: checkpoint
+  hidden_dim: 256
+  image_W: 28
+  image_H: 28
+  image_C: 1
+  num_classes: 10
