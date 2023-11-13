@@ -1,7 +1,7 @@
     
 import os
 import torch
-from model.MLP import MLP_Model
+from model.MLP import LeNet_Model
 from data_utils.load_data import Load_data
 from evaluate.evaluate import compute_score
 from tqdm import tqdm
@@ -9,7 +9,7 @@ class Inference:
     def __init__(self,config):
         self.save_path=config['save_path']
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.base_model = MLP_Model(config).to(self.device)
+        self.base_model = LeNet_Model(config).to(self.device)
         self.dataloader = Load_data(config)
     def predict(self):
         test_data = self.dataloader.load_test()

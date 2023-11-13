@@ -5,10 +5,10 @@ import torch.nn as nn
 class LeNet(nn.Module):
     def __init__(self, config):
         super(LeNet, self).__init__()
-        self.conv1 = nn.Conv2d(in_channels=config['image_C'], out_channels=6, kernel_size = 5, padding = 2)
+        self.conv1 = nn.Conv2d(in_channels=config['image_C'], out_channels=6, kernel_size=5, padding=2)
         self.relu1 = nn.ReLU()
         self.pool1 = nn.AvgPool2d(kernel_size=2, stride=2)
-        self.conv2 = nn.Conv2d(in_channels=5, out_channels = 16 , kernel_size=16)
+        self.conv2 = nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5)
         self.relu2 = nn.ReLU()
         self.pool2 = nn.AvgPool2d(kernel_size=2, stride=2)
         self.fc1 = nn.Linear(16 * 5 * 5, 120)
