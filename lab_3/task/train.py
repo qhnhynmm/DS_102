@@ -7,7 +7,8 @@ from PIL import Image
 from io import BytesIO
 from data_utils.load_data import Load_data
 from evaluate.evaluate import compute_score
-from model.MLP import LeNet_Model
+from model.Lenet import LeNet_Model
+from model.google_lenet import GoogLeNet_Model
 from tqdm import tqdm
 
 class Classify_Task:
@@ -19,7 +20,7 @@ class Classify_Task:
         self.save_path=config['save_path']
         self.dataloader = Load_data(config)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.base_model = LeNet_Model(config).to(self.device)
+        self.base_model = GoogLeNet_Model(config).to(self.device)
         # self.optimizer = optim.Adam(self.base_model.parameters(), lr=self.learning_rate)
         self.params = self.base_model.parameters()
         self.optimizer = optim.SGD(self.params, lr=self.learning_rate, momentum=0.5)
