@@ -1,7 +1,4 @@
-train_image_path: /content/DS_102/lab_3/MNIST/train-images.idx3-ubyte
-train_label_path: /content/DS_102/lab_3/MNIST/train-labels.idx1-ubyte
-test_image_path: /content/DS_102/lab_3/MNIST/t10k-images.idx3-ubyte
-test_label_path: /content/DS_102/lab_3/MNIST/t10k-labels.idx1-ubyte
+
 save_path: ./save
 train_batch: 128
 val_batch: 128

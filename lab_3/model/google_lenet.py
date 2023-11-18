@@ -100,7 +100,7 @@ class GoogleNet(nn.Module):
 class GoogLeNet_Model(nn.Module):
     def __init__(self, config):
         super().__init__()
-        self.googlenet = GoogleNet()
+        self.googlenet = GoogleNet(config)
         self.loss_fn = nn.CrossEntropyLoss()
 
     def forward(self, imgs, labels=None):

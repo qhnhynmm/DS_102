@@ -21,7 +21,7 @@ class Classify_Task:
         self.dataloader_CIFAR10 = CIFAR10LoadData(config)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.type_model = config['model']
-        if self.type_mode ==  'lenet':
+        if self.type_model ==  'lenet':
             self.base_model = LeNet_Model(config).to(self.device)
         if self.type_model == 'gg_lenet':
             self.base_model = GoogLeNet_Model(config).to(self.device)
@@ -36,8 +36,8 @@ class Classify_Task:
           os.makedirs(self.save_path)
         if self.data_name == "MNIST":
             train,valid = self.dataloader_MNIST.load_train_dev()
-        if self.data_name == "CIFAR":
-            train,valid = self.dataloader_CIFAR10.load_test()
+        # if self.data_name == "CIFAR":
+        #     train,valid = self.dataloader_CIFAR10.load_test()
 
         if os.path.exists(os.path.join(self.save_path, 'last_model.pth')):
             checkpoint = torch.load(os.path.join(self.save_path, 'last_model.pth'))

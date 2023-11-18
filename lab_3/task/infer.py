@@ -1,16 +1,29 @@
     
 import os
 import torch
-from model.Lenet import GoogLeNet_Model
-from data_utils.load_data import Load_data
+from model.Lenet import LeNet_Model
+from model.google_lenet import GoogLeNet_Model
+from model.restnet18 import ResNet18
+from data_utils.load_data_CIFAR10 import CIFAR10LoadData
+from data_utils.load_data_MNIST import Load_data
 from evaluate.evaluate import compute_score
 from tqdm import tqdm
 class Inference:
     def __init__(self,config):
         self.save_path=config['save_path']
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.base_model = GoogLeNet_Model(config).to(self.device)
-        self.dataloader = Load_data(config)
+        self.type_model = config['model']
+        self.data_name = config['data_name']
+        if self.type_model ==  'lenet':
+            self.base_model = LeNet_Model(config).to(self.device)
+        if self.type_model == 'gg_lenet':
+            self.base_model = GoogLeNet_Model(config).to(self.device)
+        if self.type_model == 'restnet18':
+            self.base_model = ResNet18
+        if self.data_name == "MNIST":
+            self.dataloader = Load_data(config)
+        if self.data_name == "CIFAR":
+            self.dataloader = CIFAR10LoadData(config)
     def predict(self):
         test_data = self.dataloader.load_test()
         if os.path.exists(os.path.join(self.save_path, 'best_model.pth')):

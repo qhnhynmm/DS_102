@@ -18,6 +18,7 @@ class LeNet(nn.Module):
         self.fc3 = nn.Linear(84, config['num_classes'])
 
     def forward(self, x):
+        x = x.unsqueeze(1)
         x = self.pool1(self.relu1(self.conv1(x)))
         x = self.pool2(self.relu2(self.conv2(x)))
         x = x.view(-1, 16 * 5 * 5)
