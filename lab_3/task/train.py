@@ -26,7 +26,7 @@ class Classify_Task:
         if self.type_model == 'gg_lenet':
             self.base_model = GoogLeNet_Model(config).to(self.device)
         if self.type_model == 'restnet18':
-            self.base_model = ResNet18
+            self.base_model = ResNet18(config)
         # self.optimizer = optim.Adam(self.base_model.parameters(), lr=self.learning_rate)
         self.params = self.base_model.parameters()
         self.optimizer = optim.SGD(self.params, lr=self.learning_rate, momentum=0.5)
