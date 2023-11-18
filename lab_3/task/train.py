@@ -2,13 +2,12 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import os
-import requests
-from PIL import Image
-from io import BytesIO
-from data_utils.load_data import Load_data
+from data_utils.load_data_CIFAR10 import CIFAR10LoadData
+from data_utils.load_data_MNIST import Load_data
 from evaluate.evaluate import compute_score
 from model.Lenet import LeNet_Model
 from model.google_lenet import GoogLeNet_Model
+from model.restnet18 import ResNet18
 from tqdm import tqdm
 
 class Classify_Task:
@@ -18,17 +17,27 @@ class Classify_Task:
         self.learning_rate = config['learning_rate']
         self.best_metric=config['best_metric']
         self.save_path=config['save_path']
-        self.dataloader = Load_data(config)
+        self.dataloader_MNIST = Load_data(config)
+        self.dataloader_CIFAR10 = CIFAR10LoadData(config)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.base_model = GoogLeNet_Model(config).to(self.device)
+        self.type_model = config['model']
+        if self.type_mode ==  'lenet':
+            self.base_model = LeNet_Model(config).to(self.device)
+        if self.type_model == 'gg_lenet':
+            self.base_model = GoogLeNet_Model(config).to(self.device)
+        if self.type_model == 'restnet18':
+            self.base_model = ResNet18
         # self.optimizer = optim.Adam(self.base_model.parameters(), lr=self.learning_rate)
         self.params = self.base_model.parameters()
         self.optimizer = optim.SGD(self.params, lr=self.learning_rate, momentum=0.5)
+        self.data_name = config['data_name']
     def training(self):
         if not os.path.exists(self.save_path):
           os.makedirs(self.save_path)
-
-        train,valid = self.dataloader.load_train_dev()
+        if self.data_name == "MNIST":
+            train,valid = self.dataloader_MNIST.load_train_dev()
+        if self.data_name == "CIFAR":
+            train,valid = self.dataloader_CIFAR10.load_test()
 
         if os.path.exists(os.path.join(self.save_path, 'last_model.pth')):
             checkpoint = torch.load(os.path.join(self.save_path, 'last_model.pth'))

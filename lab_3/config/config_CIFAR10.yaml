@@ -11,8 +11,10 @@ patience: 5
 image_C:  1
 image_W: 28
 image_H: 28
-model: model_1 # model_1 or model_2
+model: Lenet
 num_classes: 10
 learning_rate: 0.0001
 num_epochs: 100
 best_metric: accuracy
+dropout: 0.2
+data_name: CIFAR10
