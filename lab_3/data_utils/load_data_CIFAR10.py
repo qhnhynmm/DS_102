@@ -19,7 +19,12 @@ class CIFAR10Dataset(Dataset):
 
     def __getitem__(self, idx):
         img, label = self.data[idx]
-        return {'image': transforms.ToTensor()(img), 'label': torch.tensor(label)}
+
+        # Check if the image is already a tensor
+        if not isinstance(img, torch.Tensor):
+            img = transforms.ToTensor()(img)
+
+        return {'image': img, 'label': torch.tensor(label)}
 
 class CIFAR10LoadData:
     def __init__(self, config):

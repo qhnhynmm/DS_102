@@ -36,8 +36,8 @@ class Classify_Task:
           os.makedirs(self.save_path)
         if self.data_name == "MNIST":
             train,valid = self.dataloader_MNIST.load_train_dev()
-        # if self.data_name == "CIFAR":
-        #     train,valid = self.dataloader_CIFAR10.load_test()
+        if self.data_name == "CIFAR10":
+            train,valid = self.dataloader_CIFAR10.load_train_dev()
 
         if os.path.exists(os.path.join(self.save_path, 'last_model.pth')):
             checkpoint = torch.load(os.path.join(self.save_path, 'last_model.pth'))
