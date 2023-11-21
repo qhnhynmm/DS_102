@@ -18,7 +18,7 @@ class Inference:
             self.base_model = LeNet_Model(config).to(self.device)
         if self.type_model == 'gg_lenet':
             self.base_model = GoogLeNet_Model(config).to(self.device)
-        if self.type_model == 'restnet18':
+        if self.type_model == 'resnet18':
             self.base_model = ResNet18
         if self.data_name == "MNIST":
             self.dataloader = Load_data(config)

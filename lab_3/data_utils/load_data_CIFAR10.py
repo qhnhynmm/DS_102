@@ -6,13 +6,13 @@ import torchvision.datasets as datasets
 
 class CIFAR10Dataset(Dataset):
     def __init__(self, root, train=True, transform=None, download=True):
+        self.train=train
         if download:
             self.download(root)
-        self.data = datasets.CIFAR10(root=root, train=train, transform=transform)
-
+        self.data = datasets.CIFAR10(root=root, train=self.train, transform=transform)
     def download(self, root):
-        datasets.CIFAR10(root=root, train=True, download=True)
-        datasets.CIFAR10(root=root, train=False, download=True)
+        datasets.CIFAR10(root=root, train=self.train, download=True)
+        datasets.CIFAR10(root=root, train=self.train, download=True)
 
     def __len__(self):
         return len(self.data)
@@ -23,8 +23,10 @@ class CIFAR10Dataset(Dataset):
         # Check if the image is already a tensor
         if not isinstance(img, torch.Tensor):
             img = transforms.ToTensor()(img)
+        # img = torch.tensor(img, dtype=torch.float32)
+        # label = torch.tensor(label, dtype=torch.long)
 
-        return {'image': img, 'label': torch.tensor(label)}
+        return {'image': img, 'label': label}
 
 class CIFAR10LoadData:
     def __init__(self, config):

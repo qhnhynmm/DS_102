@@ -28,9 +28,9 @@ class BasicBlock(nn.Module):
         out = self.relu(out)
         return out
 
-class ResNet18(nn.Module):
+class ResNet18_(nn.Module):
     def __init__(self, config):
-        super(ResNet18, self).__init__()
+        super(ResNet18_, self).__init__()
         self.in_channels = 64
         self.conv1 = nn.Conv2d(config['image_C'], 64, kernel_size=7, stride=2, padding=3, bias=False)
         self.bn1 = nn.BatchNorm2d(64)
@@ -68,3 +68,18 @@ class ResNet18(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.fc(x)
         return x
+
+class ResNet18(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        self.ResNet = ResNet18_(config)
+        self.loss_fn = nn.CrossEntropyLoss()
+
+    def forward(self, imgs, labels=None):
+        if labels is not None:
+            logits = self.ResNet(imgs)
+            loss = self.loss_fn(logits, labels)
+            return logits, loss
+        else:
+            logits = self.ResNet(imgs)
+            return logits
