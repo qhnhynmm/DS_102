@@ -15,9 +15,7 @@ class Inference:
             self.base_model = VGG19(config).to(self.device)
         if self.model == 'resnet50':
             self.base_model = ResNet50(config).to(self.device)
-        if self.data == "Chest-X-Ray":
-            self.dataloader = Load_data(config)
-            self.num_class = config['data']['num_classes']            
+        self.dataloader = Load_data(config)
     def predict(self):
         test_data = self.dataloader.load_test()
         if os.path.exists(os.path.join(self.save_path, 'best_model.pth')):

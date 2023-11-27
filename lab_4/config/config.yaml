@@ -1,8 +1,6 @@
-data : Chest-X-Ray
-  train_path: ./mnist_png/mnist_png/training
-  dev_path: ./mnist_png/mnist_png/testing
-  test_path: ./mnist_png/mnist_png/testing
-  num_classes: 10
+train_path: /content/chest_xray/train
+test_path: /content/chest_xray/test
+dev_path: /content/chest_xray/val
 # train_path: ./cifar10/cifar10/train
 # test_path: ./cifar10/cifar10/test
 save_path: ./save
@@ -13,11 +11,11 @@ num_worker: 2
 aug: False
 patience: 5
 image_C:  3
-image_W: 28
-image_H: 28
-model: bgg19 # vgg19, resnet50
+image_W: 224
+image_H: 224
+model: vgg19 # vgg19, resnet50
 load_pretrained: True
-
-learning_rate: 0.001
+num_classes: 10
+learning_rate: 0.01
 num_epochs: 100
 best_metric: accuracy

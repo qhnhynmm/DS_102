@@ -18,16 +18,13 @@ class Classify_Task:
         self.learning_rate = config['learning_rate']
         self.best_metric=config['best_metric']
         self.save_path=os.path.join(config['save_path'],config['model'])
-        self.data = config['data']
-        if self.data == "Chest-X-Ray":
-            self.dataloader = Load_data(config)
-            self.num_class = config['data']['num_classes']
+        self.dataloader = Load_data(config)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model = config['model']
         if self.model == 'vgg19':
-            self.base_model = VGG19(self.num_class).to(self.device)
+            self.base_model = VGG19(config).to(self.device)
         if self.model == 'resnet50':
-            self.base_model = ResNet50(self.num_class).to(self.device)
+            self.base_model = ResNet50(config).to(self.device)
         self.optimizer = optim.Adam(self.base_model.parameters(), lr=self.learning_rate)
         # self.optimizer = optim.SGD(self.base_model.parameters(),lr=self.learning_rate,momentum=0.5)
     def training(self):
