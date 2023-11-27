@@ -1,0 +1,20 @@
+train_path: ./mnist_png/mnist_png/training
+test_path: ./mnist_png/mnist_png/testing
+# train_path: ./cifar10/cifar10/train
+# test_path: ./cifar10/cifar10/test
+save_path: ./save
+train_batch: 128
+dev_batch: 128
+test_batch: 128
+num_worker: 2
+aug: False
+patience: 5
+image_C:  3
+image_W: 28
+image_H: 28
+model: lenet # lenet, googlenet, resnet50, resnet18
+load_pretrained: True
+num_classes: 10
+learning_rate: 0.001
+num_epochs: 100
+best_metric: accuracy
