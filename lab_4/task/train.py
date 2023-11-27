@@ -19,7 +19,6 @@ class Classify_Task:
         self.best_metric=config['best_metric']
         self.save_path=os.path.join(config['save_path'],config['model'])
         self.dataloader = Load_data(config)
-        self.criterion = nn.CrossEntropyLoss()  # Define CrossEntropyLoss
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model = config['model']
         if self.model == 'vgg19':
@@ -63,11 +62,10 @@ class Classify_Task:
             for it,item in enumerate(tqdm(train)):
                 images, labels = item['image'].to(self.device), item['label'].to(self.device)
                 self.optimizer.zero_grad()
-                logits = self.base_model(images,labels)
-                loss = self.criterion(logits, labels)
+                logits,loss = self.base_model(images,labels)
                 loss.backward()
                 self.optimizer.step()
-                train_loss += loss.item()
+                train_loss += loss
 
             with torch.no_grad():
                 for it,item in enumerate(tqdm(valid)):

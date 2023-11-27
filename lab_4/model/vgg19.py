@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 
-class VGG19(nn.Module):
+class VGG19_(nn.Module):
     def __init__(self, config):
         super(VGG19, self).__init__()
         self.num_classes = config['num_classes']
@@ -81,3 +81,17 @@ class VGG19(nn.Module):
 #         x = torch.flatten(x, 1)
 #         x = self.classifier(x)
 #         return x
+class VGG19(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        self.vgg19 = VGG19_(config)
+        self.loss_fn = nn.CrossEntropyLoss()
+
+    def forward(self, imgs, labels=None):
+        if labels is not None:
+            logits = self.vgg19(imgs)
+            loss = self.loss_fn(logits, labels)
+            return logits, loss
+        else:
+            logits = self.vgg19(imgs)
+            return logits
