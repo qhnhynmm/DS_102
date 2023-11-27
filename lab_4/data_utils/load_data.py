@@ -43,7 +43,8 @@ class Load_data:
     def __init__(self, config):
         self.train_path=config['train_path']
         self.test_path=config['test_path']
-
+        self.dev_path=config['dev_path']
+        
         self.train_batch=config['train_batch']
         self.dev_batch=config['dev_batch']
         self.test_batch=config['test_batch']
@@ -53,15 +54,15 @@ class Load_data:
         self.aug = config['aug']
         self.num_worker=config['num_worker']
 
-    def load_train_dev(self):
-        train_dev_set=IMG_Dataset(self.train_path,self.image_W,self.image_H,self.aug)
-        dataset_size = len(train_dev_set)
-        train_size = int(0.9 * dataset_size)
-        dev_size = dataset_size - train_size
-        train_set, dev_set = random_split(train_dev_set, [train_size, dev_size])
+    def load_train(self):
+        train_set=IMG_Dataset(self.train_path,self.image_W,self.image_H,self.aug)
         train_loader = DataLoader(train_set, batch_size=self.train_batch, num_workers=self.num_worker,shuffle=True)
+        return train_loader
+    
+    def load_dev(self):
+        dev_set=IMG_Dataset(self.dev_path,self.image_W,self.image_H,self.aug)
         dev_loader = DataLoader(dev_set, batch_size=self.dev_batch, num_workers=self.num_worker,shuffle=True)
-        return train_loader, dev_loader
+        return dev_loader
     
     def load_test(self):
         test_set=IMG_Dataset(self.test_path,self.image_W,self.image_H,self.aug)

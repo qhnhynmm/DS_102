@@ -4,9 +4,9 @@ import torch.nn.functional as F
 import torchvision.models as models
 
 class ResNet50_(nn.Module):
-    def __init__(self, config):
-        super(ResNet50, self).__init__()
-        self.num_classes = config['num_classes']
+    def __init__(self, num_class):
+        super(ResNet50_, self).__init__()
+        self.num_classes = num_class
         
         self.resnet50 = models.resnet50(pretrained=True)
         self.resnet50.fc = nn.Linear(self.resnet50.fc.in_features, self.num_classes)
@@ -90,9 +90,9 @@ class ResNet50_(nn.Module):
 
 #         return x
 class ResNet50(nn.Module):
-    def __init__(self, config):
+    def __init__(self, num_class):
         super().__init__()
-        self.ResNet = ResNet50_(config)
+        self.ResNet = ResNet50_(num_class)
         self.loss_fn = nn.CrossEntropyLoss()
 
     def forward(self, imgs, labels=None):

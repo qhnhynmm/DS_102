@@ -1,5 +1,8 @@
-train_path: ./mnist_png/mnist_png/training
-test_path: ./mnist_png/mnist_png/testing
+data : Chest-X-Ray
+  train_path: ./mnist_png/mnist_png/training
+  dev_path: ./mnist_png/mnist_png/testing
+  test_path: ./mnist_png/mnist_png/testing
+  num_classes: 10
 # train_path: ./cifar10/cifar10/train
 # test_path: ./cifar10/cifar10/test
 save_path: ./save
@@ -12,9 +15,9 @@ patience: 5
 image_C:  3
 image_W: 28
 image_H: 28
-model: lenet # lenet, googlenet, resnet50, resnet18
+model: bgg19 # vgg19, resnet50
 load_pretrained: True
-num_classes: 10
+
 learning_rate: 0.001
 num_epochs: 100
 best_metric: accuracy

@@ -4,9 +4,9 @@ import torch.nn.functional as F
 import torchvision.models as models
 
 class VGG19_(nn.Module):
-    def __init__(self, config):
-        super(VGG19, self).__init__()
-        self.num_classes = config['num_classes']
+    def __init__(self, num_class):
+        super(VGG19_, self).__init__()
+        self.num_classes = num_class
         
         self.vgg19 = models.vgg19(pretrained=True)
         self.vgg19.classifier[6] = nn.Linear(self.vgg19.classifier[6].in_features, self.num_classes)
@@ -82,9 +82,9 @@ class VGG19_(nn.Module):
 #         x = self.classifier(x)
 #         return x
 class VGG19(nn.Module):
-    def __init__(self, config):
+    def __init__(self, num_class):
         super().__init__()
-        self.vgg19 = VGG19_(config)
+        self.vgg19 = VGG19_(num_class)
         self.loss_fn = nn.CrossEntropyLoss()
 
     def forward(self, imgs, labels=None):
