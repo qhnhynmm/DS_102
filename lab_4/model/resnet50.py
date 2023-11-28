@@ -89,7 +89,7 @@ class ResNet50_(nn.Module):
 #         x = self.fc(x)
 
 #         return x
-class ResNet(nn.Module):
+class ResNet50(nn.Module):
     def __init__(self, config):
         super().__init__()
         self.ResNet = ResNet50_(config)
