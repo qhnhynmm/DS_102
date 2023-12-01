@@ -8,19 +8,25 @@ class VGG19_(nn.Module):
         super(VGG19_, self).__init__()
         self.num_classes = config['num_classes']
         
+
         self.vgg19 = models.vgg19(pretrained=True)
+
+
+        for param in self.vgg19.parameters():
+            param.requires_grad = False
+
+      
         self.vgg19.classifier[6] = nn.Linear(self.vgg19.classifier[6].in_features, self.num_classes)
 
     def forward(self, x):
         x = self.vgg19(x)
-        x = F.softmax(x, dim=1)
         return x
 
 
 # Triển khai 
-# class VGG19(nn.Module):
+# class VGG19_(nn.Module):
 #     def __init__(self, config):
-#         super(VGG19, self).__init__()
+#         super(VGG19_, self).__init__()
 #         self.features = nn.Sequential(
 #             nn.Conv2d(3, 64, kernel_size=3, padding=1),
 #             nn.ReLU(inplace=True),
@@ -80,6 +86,7 @@ class VGG19_(nn.Module):
 #         x = self.avgpool(x)
 #         x = torch.flatten(x, 1)
 #         x = self.classifier(x)
+
 #         return x
 class VGG19(nn.Module):
     def __init__(self, config):
