@@ -1,8 +1,7 @@
 train_path: /content/chest_xray/train
 test_path: /content/chest_xray/test
 dev_path: /content/chest_xray/val
-# train_path: ./cifar10/cifar10/train
-# test_path: ./cifar10/cifar10/test
+
 save_path: ./save
 train_batch: 128
 dev_batch: 128
@@ -13,9 +12,10 @@ patience: 5
 image_C:  3
 image_W: 224
 image_H: 224
-model: vgg19 # vgg19, resnet50
+model: resnet50 # vgg19, resnet50
 load_pretrained: True
 num_classes: 10
-learning_rate: 0.01
+learning_rate: 0.001
 num_epochs: 100
 best_metric: accuracy
+dropout: 0.5
