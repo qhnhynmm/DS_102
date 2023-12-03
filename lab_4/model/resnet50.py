@@ -15,7 +15,8 @@ class ResNet50_(nn.Module):
 
         self.resnet50.fc = nn.Sequential(
             nn.Linear(self.resnet50.fc.in_features, 512),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
+            nn.BatchNorm1d(512),  # Batch Normalization
             nn.Dropout(self.dropout),
             nn.Linear(512, self.num_classes)
         )

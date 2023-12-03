@@ -16,9 +16,11 @@ class VGG19_(nn.Module):
         self.vgg19.classifier = nn.Sequential(
             nn.Linear(self.vgg19.classifier[0].in_features, 4096),
             nn.ReLU(inplace=True),
+            nn.BatchNorm1d(4096),  # Batch Normalization
             nn.Dropout(self.dropout),
             nn.Linear(4096, 4096),
             nn.ReLU(inplace=True),
+            nn.BatchNorm1d(4096),  # Batch Normalization
             nn.Dropout(self.dropout),
             nn.Linear(4096, self.num_classes)
         )
