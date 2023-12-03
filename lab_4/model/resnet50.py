@@ -9,7 +9,7 @@ class ResNet50_(nn.Module):
         self.num_classes = config['num_classes']
         
         self.resnet50 = models.resnet50(pretrained=True)
-        for param in self.vgg19.parameters():
+        for param in self.resnet50.parameters():
             param.requires_grad = False
         self.resnet50.fc = nn.Linear(self.resnet50.fc.in_features, self.num_classes)
 
