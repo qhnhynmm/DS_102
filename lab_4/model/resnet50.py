@@ -6,18 +6,23 @@ import torchvision.models as models
 class ResNet50_(nn.Module):
     def __init__(self, config):
         super(ResNet50_, self).__init__()
+        self.dropout = config['dropout']
         self.num_classes = config['num_classes']
         
         self.resnet50 = models.resnet50(pretrained=True)
         for param in self.resnet50.parameters():
             param.requires_grad = False
-        self.resnet50.fc = nn.Linear(self.resnet50.fc.in_features, self.num_classes)
+
+        self.resnet50.fc = nn.Sequential(
+            nn.Linear(self.resnet50.fc.in_features, 512),
+            nn.ReLU(),
+            nn.Dropout(self.dropout),
+            nn.Linear(512, self.num_classes)
+        )
 
     def forward(self, x):
         x = self.resnet50(x)
-        # x = F.softmax(x, dim=1)
         return x
-
 # # Define the Residual Block
 # class ResidualBlock(nn.Module):
 #     def __init__(self, in_channels, out_channels, stride=1):

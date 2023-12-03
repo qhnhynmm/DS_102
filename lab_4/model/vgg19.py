@@ -7,16 +7,21 @@ class VGG19_(nn.Module):
     def __init__(self, config):
         super(VGG19_, self).__init__()
         self.num_classes = config['num_classes']
-        
-
+        self.dropout = config['dropout']
         self.vgg19 = models.vgg19(pretrained=True)
-
 
         for param in self.vgg19.parameters():
             param.requires_grad = False
 
-      
-        self.vgg19.classifier[6] = nn.Linear(self.vgg19.classifier[6].in_features, self.num_classes)
+        self.vgg19.classifier = nn.Sequential(
+            nn.Linear(self.vgg19.classifier[0].in_features, 4096),
+            nn.ReLU(inplace=True),
+            nn.Dropout(self.dropout),
+            nn.Linear(4096, 4096),
+            nn.ReLU(inplace=True),
+            nn.Dropout(self.dropout),
+            nn.Linear(4096, self.num_classes)
+        )
 
     def forward(self, x):
         x = self.vgg19(x)
