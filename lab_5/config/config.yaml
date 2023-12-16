@@ -17,6 +17,8 @@ text_embedding:
 model:
   intermediate_dims: 512
   dropout: 0.2
+  type_model: rnn
+  num_layer: 2
 train:
   task: sentiment
   output_dir: checkpoint
