@@ -12,10 +12,7 @@ class RNN_Model(nn.Module):
         self.num_labels = num_labels
         self.intermediate_dims = config["model"]["intermediate_dims"]
         self.dropout=config["model"]["dropout"]
-        self.max_length = config['tokenizer']['max_length']
-        self.embed_type=config['text_embedding']['type']
         self.text_embbeding = Embedding(config)
-        self.max_length = config["tokenizer"]["max_length"]
         self.rnn = nn.RNN(self.intermediate_dims, self.intermediate_dims,
                           num_layers=config['model']['num_layer'],dropout=self.dropout)
         self.classifier = nn.Linear(self.intermediate_dims,self.num_labels)
