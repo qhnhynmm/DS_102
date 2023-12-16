@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 class DatasetLoader:
     def __init__(self, config: Dict):
         self.config = config
-        self.model_name = config['model']['name']
+        self.model_name = config['train']['task']
         self.batch_size = config['train']['train_batch_size']
         self.batch_size_test = config['inference']['batch_size']
     def load_dataset(self) -> Dict:
