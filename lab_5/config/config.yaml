@@ -1,0 +1,34 @@
+
+data:
+  dataset_folder: /content/DS310/lab2/data
+  train_dataset: train_UIT-VSFC.csv
+  val_dataset: dev_UIT-VSFC.csv
+  test_dataset: test_UIT-VSFC.csv
+
+tokenizer:
+  padding: max_length
+  max_length: 64
+
+text_embedding:
+  d_features: 300
+  d_model: 512
+  dropout: 0.2
+
+model:
+  intermediate_dims: 512
+  dropout: 0.2
+train:
+  task: sentiment
+  output_dir: checkpoint
+  seed: 12345
+  num_train_epochs: 100
+  patience: 5
+  learning_rate: 0.01
+  weight_decay: 0.0
+  warmup_ratio: 0.0
+  warmup_steps: 0
+  metric_for_best_model: f1
+  train_batch_size: 256
+  eval_batch_size: 256
+inference:
+  batch_size: 512
