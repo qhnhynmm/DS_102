@@ -57,6 +57,8 @@ class LLM_Detec_Gen_Task:
             valid_f1 = 0.
             valid_auc= 0.
             train_loss = 0.
+            valid_recall = 0.
+            valid_precision = 0.
             for it, (sents, labels, id) in enumerate(tqdm(train)):
                 with torch.autocast(device_type='cuda', dtype=torch.float32, enabled=True):
                     logits, loss = self.base_model(sents, labels.to(dtype=torch.float32, device=self.device))
@@ -72,12 +74,12 @@ class LLM_Detec_Gen_Task:
                 for it, (sents, labels, id) in enumerate(tqdm(valid)):
                     with torch.autocast(device_type='cuda', dtype=torch.float32, enabled=True):
                         logits = self.base_model(sents)
-                        preds = torch.round(logits)
+                        preds = torch.round(logits).int()
                     valid_acc+=self.compute_score.acc(labels,preds)
                     valid_f1+=self.compute_score.f1(labels,preds)
-                    valid_auc+=self.compute_score.auc(labels,logits)
-                    valid_recall+=self.compute_score.recall(labels,logits)
-                    valid_precision+=self.compute_score.precision(labels,logits)
+                    valid_auc+=self.compute_score.auc(labels,preds)
+                    valid_recall+=self.compute_score.recall(labels,preds)
+                    valid_precision+=self.compute_score.precision(labels,preds)
             valid_acc /= len(valid)
             valid_f1 /= len(valid)
             valid_auc /= len(valid)

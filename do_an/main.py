@@ -7,8 +7,8 @@ from typing import Text
 import torch
 import transformers
 
-from task.train import Classify_Task
-from task.infer import Inference
+from task.train import LLM_Detec_Gen_Task
+from task.infer import Predict
 
 def main(config_path: Text) -> None:
     transformers.logging.set_verbosity_error()
@@ -18,11 +18,11 @@ def main(config_path: Text) -> None:
         config = yaml.safe_load(conf_file)
     
     logging.info("Training started...")
-    Classify_Task(config).training()
+    LLM_Detec_Gen_Task(config).training()
     logging.info("Training complete")
     
     logging.info('now evaluate on test data...')
-    Inference(config).predict()
+    Predict(config).predict()
     logging.info('task done!!!')
 if __name__ == '__main__':
     args_parser = argparse.ArgumentParser()
