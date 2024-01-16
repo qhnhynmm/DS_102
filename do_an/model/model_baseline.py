@@ -21,7 +21,6 @@ class Baseline(nn.Module):
         embbed, mask = self.text_embbeding(text)
         logits = self.classifier(torch.mean(embbed,dim=1)).squeeze(1)
         logits = F.sigmoid(logits)
-
         if labels is not None:
             loss = self.criterion(logits, labels)
             return logits,loss
