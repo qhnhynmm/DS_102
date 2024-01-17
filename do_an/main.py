@@ -18,7 +18,7 @@ def main(config_path: Text) -> None:
         config = yaml.safe_load(conf_file)
     
     logging.info("Training started...")
-    LLM_Detec_Gen_Task(config).training()
+    LLM_Detec_Gen_Task(config).predict_submission()
     logging.info("Training complete")
     
     logging.info('now evaluate on test data...')
